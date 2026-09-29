@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0B0F17; --panel: #111724; --line: rgba(255,255,255,.07); --line2: rgba(255,255,255,.12);
+  --txt: #ECE8DF; --mute: #9AA1B2; --dim: #6B7385;
+  --gold: #D4AF37; --gold2: #F4DC8F;
+  --gold-grad: linear-gradient(135deg, #F7E3A1 0%, #D4AF37 45%, #AD8628 100%);
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  color-scheme: dark;
+}
+
+@layer base {
+  html { background: var(--bg); }
+  body {
+    @apply font-body antialiased;
+    color: var(--txt); background: var(--bg); min-height: 100vh;
+    background-image:
+      radial-gradient(1100px 520px at 50% -220px, rgba(212,175,55,.13), transparent 70%),
+      linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
+    background-size: 100% 100%, 64px 64px, 64px 64px;
+    background-attachment: fixed;
+  }
+  h1, h2, h3, h4 { @apply font-display; letter-spacing: -.01em; }
+  ::selection { background: rgba(212,175,55,.35); color: #fff; }
+  :is(a, button, [role="button"], [tabindex]):focus-visible { outline: 2px solid rgba(244,220,143,.8); outline-offset: 2px; border-radius: 10px; }
+  :is(input, select, textarea):focus-visible { outline: none; }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+}
+
+@layer components {
+  .shell { @apply mx-auto w-full px-4 md:px-8; max-width: 1280px; }
+  .panel { background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.012)); border: 1px solid var(--line); border-radius: 22px; }
+  .glass { background: rgba(14,19,30,.72); backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%); border: 1px solid var(--line2); }
+  .card { @apply panel; transition: transform .45s var(--ease), border-color .35s, box-shadow .45s var(--ease); }
+  .card:hover { transform: translateY(-4px); border-color: rgba(212,175,55,.3); box-shadow: 0 30px 70px -30px rgba(0,0,0,.9), 0 0 50px -25px rgba(212,175,55,.35); }
+  .btn { @apply inline-flex items-center justify-center gap-2 font-bold whitespace-nowrap select-none; border-radius: 14px; padding: 0 1.15rem; height: 46px; transition: transform .25s var(--ease), box-shadow .3s, background .3s, border-color .3s; }
+  .btn:active:not(:disabled) { transform: scale(.97); }
+  .btn-gold { color: #1A1405; background: var(--gold-grad); box-shadow: 0 10px 30px -10px rgba(212,175,55,.7), inset 0 1px 0 rgba(255,255,255,.5); }
+  .btn-gold:hover:not(:disabled) { box-shadow: 0 14px 38px -10px rgba(212,175,55,.95), inset 0 1px 0 rgba(255,255,255,.5); }
+  .btn-ghost { color: var(--txt); background: rgba(255,255,255,.04); border: 1px solid var(--line2); }
+  .btn-ghost:hover:not(:disabled) { border-color: rgba(212,175,55,.45); background: rgba(212,175,55,.06); }
+  .btn-sm { height: 38px; padding: 0 .85rem; border-radius: 11px; font-size: .85rem; }
+  .input { @apply w-full; color: var(--txt); background: rgba(255,255,255,.035); border: 1px solid var(--line2); border-radius: 13px; padding: .72rem .95rem; transition: border-color .25s, box-shadow .25s; }
+  .input:focus { border-color: rgba(212,175,55,.6); box-shadow: 0 0 0 4px rgba(212,175,55,.12); }
+  .input::placeholder { color: var(--dim); }
+  select.input option { background: #111724; }
+  .label { @apply block text-xs font-bold mb-2; color: var(--mute); }
+  .chip { @apply inline-flex items-center gap-1 text-xs font-bold whitespace-nowrap; padding: .3rem .6rem; border-radius: 999px; background: rgba(11,15,23,.6); border: 1px solid var(--line2); }
+  .gold-text { background: linear-gradient(180deg, #FFF4CC, #F4DC8F 40%, #C9A233); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .mute { color: var(--mute); }
+  .dim { color: var(--dim); }
+  .gold { color: var(--gold2); }
+  .divider { height: 1px; background: var(--line); }
+  .num { font-variant-numeric: tabular-nums; }
+  .clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .prose-nx p { margin: 0 0 .9em; line-height: 1.95; color: #C9C4B8; }
+  .spin { animation: spin .8s linear infinite; }
+  .rise { animation: rise .8s var(--ease) both; }
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
